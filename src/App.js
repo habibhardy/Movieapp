@@ -3,6 +3,8 @@ import './App.css';
 import { useState } from 'react';
 import MovieList from './MovieList';
 import Filter from './Filter';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import MovieDescription from './MovieDescription';
 
 
 
@@ -23,7 +25,7 @@ const App = () => {
     setnewMovie({
       title:textInput,
       description:"descriptiondescription",
-      posterURL:"",
+      posterURL:'https://www.youtube.com/watch?v=mCVXJ5Lzu8E&t=5s',
       rating:"3.5",
     });
 }
@@ -42,14 +44,22 @@ const App = () => {
 
   return (
     <div className="container">
-      <h1>Movie List</h1>
-      <Filter
+
+<h1>Movie List</h1>
+<Filter
         titleFilter={titleFilter}
         ratingFilter={ratingFilter}
         onTitleChange={e => setTitleFilter(e.target.value)}
         onRatingChange={e => setRatingFilter(e.target.value)}
       />
-      <MovieList movies={filterMovies()} />
+
+  <BrowserRouter>
+      <Routes>
+          <Route path="/" element={<MovieList movies={filterMovies()} />} />
+          <Route path="/movie/:title" element={<MovieDescription movies={movies} />} />
+      </Routes>
+    </BrowserRouter>
+
       <div className="add-movie">
         <h2>Add a New Movie</h2>
         <input type="text" name="name"   onChange={handleChange} />
